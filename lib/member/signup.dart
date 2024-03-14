@@ -15,6 +15,7 @@ class _SignUpPageState extends State<SignUpPage> with SingleTickerProviderStateM
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late ConfettiController _confettiController;
+  bool _loginPressed = false;
 
   @override
   void initState() {
@@ -151,6 +152,34 @@ class _SignUpPageState extends State<SignUpPage> with SingleTickerProviderStateM
                                   ),
                                 ),
                               ),
+                              const SizedBox(height: 8), // Araya biraz boşluk ekledik
+                              SizedBox(
+                                width: 250,
+                                child: TextFormField(
+                                  keyboardType: TextInputType.visiblePassword,
+                                  obscureText: true,
+                                  style: const TextStyle(
+                                    color: Color(0xFF000000),
+                                  ),
+                                  decoration: InputDecoration(
+                                    filled: false,
+                                    contentPadding: const EdgeInsets.all(10),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: const BorderSide(color: Color(0xFF000000), width: 2.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: const BorderSide(color: Color(0xFF000000), width: 1.0),
+                                    ),
+                                    hintText: 'Your Password Again',
+                                    hintStyle: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               const SizedBox(height: 12),
                               GestureDetector(
                                 onTap: () {
@@ -208,18 +237,44 @@ class _SignUpPageState extends State<SignUpPage> with SingleTickerProviderStateM
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: GestureDetector(
-                    onTap: () {
+                    onTapDown: (_) {
+                      setState(() {
+                        _loginPressed = true;
+                      });
+                    },
+                    onTapUp: (_) {
+                      setState(() {
+                        _loginPressed = false;
+                      });
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => LoginPage()), // Login sayfasına geçiş
                       );
                     },
-                    child: const Text(
-                      'Go To Login',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                    onTapCancel: () {
+                      setState(() {
+                        _loginPressed = false;
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: _loginPressed
+                            ? [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(1.0), // Değişiklik burada yapıldı
+                            blurRadius: 60,
+                            offset: const Offset(0, 3),
+                          ),
+                        ]
+                            : null,
+                      ),
+                      child: const Text(
+                        'Go To Login',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),

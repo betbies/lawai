@@ -5,7 +5,7 @@ import '../main.dart';
 import 'signup.dart'; // Eklediğimiz dosya import edildi.
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -15,6 +15,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late ConfettiController _confettiController;
+  bool _loginPressed = false;
 
   @override
   void initState() {
@@ -209,18 +210,44 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 12),
                   child: GestureDetector(
-                    onTap: () {
+                    onTapDown: (_) {
+                      setState(() {
+                        _loginPressed = true;
+                      });
+                    },
+                    onTapUp: (_) {
+                      setState(() {
+                        _loginPressed = false;
+                      });
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const SignUpPage()), // SignUpPage'e geçiş
                       );
                     },
-                    child: const Text(
-                      'Go To Sign Up',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                    onTapCancel: () {
+                      setState(() {
+                        _loginPressed = false;
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: _loginPressed
+                            ? [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(1.0), // Değişiklik burada yapıldı
+                            blurRadius: 60,
+                            offset: const Offset(0, 3),
+                          ),
+                        ]
+                            : null,
+                      ),
+                      child: const Text(
+                        'Go To Sign Up',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
