@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                 ),
                               ),
                               const Text(
-                                'LOGIN',
+                                'GİRİŞ',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w600,
@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                       borderRadius: BorderRadius.circular(25.0),
                                       borderSide: const BorderSide(color: Color(0xFF000000), width: 1.0),
                                     ),
-                                    hintText: 'Your Email',
+                                    hintText: 'E-mail',
                                     hintStyle: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500,
@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                       borderRadius: BorderRadius.circular(25.0),
                                       borderSide: const BorderSide(color: Color(0xFF000000), width: 1.0),
                                     ),
-                                    hintText: 'Your Password',
+                                    hintText: 'Şifre',
                                     hintStyle: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500,

@@ -90,7 +90,7 @@ class _SignUpPageState extends State<SignUpPage> with SingleTickerProviderStateM
                                 ),
                               ),
                               const Text(
-                                'SIGN UP',
+                                'KAYIT OL',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w600,
@@ -116,7 +116,7 @@ class _SignUpPageState extends State<SignUpPage> with SingleTickerProviderStateM
                                       borderRadius: BorderRadius.circular(25.0),
                                       borderSide: const BorderSide(color: Color(0xFF000000), width: 1.0),
                                     ),
-                                    hintText: 'Your Email',
+                                    hintText: 'E-mail',
                                     hintStyle: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500,
@@ -144,7 +144,7 @@ class _SignUpPageState extends State<SignUpPage> with SingleTickerProviderStateM
                                       borderRadius: BorderRadius.circular(25.0),
                                       borderSide: const BorderSide(color: Color(0xFF000000), width: 1.0),
                                     ),
-                                    hintText: 'Your Password',
+                                    hintText: 'Şifre',
                                     hintStyle: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500,
@@ -172,7 +172,7 @@ class _SignUpPageState extends State<SignUpPage> with SingleTickerProviderStateM
                                       borderRadius: BorderRadius.circular(25.0),
                                       borderSide: const BorderSide(color: Color(0xFF000000), width: 1.0),
                                     ),
-                                    hintText: 'Your Password Again',
+                                    hintText: 'Tekrar Şifre',
                                     hintStyle: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500,

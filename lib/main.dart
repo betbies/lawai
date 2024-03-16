@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'member/login.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
@@ -14,7 +13,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'My App',
       theme: ThemeData.light(),
-      home: const LoginPage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const LoginPage(),
+        '/home': (context) => const MyHomePage(),
+      },
     );
   }
 }
@@ -27,7 +30,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _currentIndex = 0;
+  int _currentIndex = 1; // Keşfet sekmesine yönlendirecek şekilde değiştirildi
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.chat),
-            label: 'Chat',
+            label: 'Geçmiş',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.explore),
@@ -75,32 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       );
     } else if (_currentIndex == 1) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: List.generate(
-          5,
-              (index) => SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                // Buton tıklama işlemleri
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black,
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  side: const BorderSide(color: Colors.blue, width: 3),
-                ),
-                shadowColor: Colors.black,
-                elevation: 5,
-              ),
-              child: const Text('SORU'),
-            ),
-          ),
-        ),
-      );
+      return Container(); // Keşfet sayfasının içeriği boşaltıldı
     } else {
       return const Center(
         child: Text('Profil içeriği'),
@@ -112,10 +90,10 @@ class _MyHomePageState extends State<MyHomePage> {
     return ListView(
       children: const [
         ListTile(
-          title: Text('Sohbet Mesajı 1'),
+          title: Text('Geçmiş Sohbet 1'),
         ),
         ListTile(
-          title: Text('Sohbet Mesajı 2'),
+          title: Text('Geçmiş Sohbet 2'),
         ),
       ],
     );
