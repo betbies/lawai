@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'member/login.dart';
+import 'pages/gecmis.dart';
+import 'pages/kesfet.dart';
+import 'pages/profil.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,98 +25,34 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _currentIndex = 1; // Keşfet sekmesine yönlendirecek şekilde değiştirildi
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('LAW AI'),
-        backgroundColor: Colors.white,
-      ),
-      body: _buildBody(),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.chat),
-            label: 'Geçmiş',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.explore),
-            label: 'Keşfet',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profil',
-          ),
-        ],
-        backgroundColor: Colors.white,
-        selectedItemColor: Colors.blue,
-      ),
-    );
-  }
-
-  Widget _buildBody() {
-    if (_currentIndex == 0) {
-      return Column(
-        children: [
-          Expanded(
-            child: _buildChatMessages(),
-          ),
-          _buildTextEditor(),
-        ],
-      );
-    } else if (_currentIndex == 1) {
-      return Container(); // Keşfet sayfasının içeriği boşaltıldı
-    } else {
-      return const Center(
-        child: Text('Profil içeriği'),
-      );
-    }
-  }
-
-  Widget _buildChatMessages() {
-    return ListView(
-      children: const [
-        ListTile(
-          title: Text('Geçmiş Sohbet 1'),
-        ),
-        ListTile(
-          title: Text('Geçmiş Sohbet 2'),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTextEditor() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: TextFormField(
-        decoration: InputDecoration(
-          hintText: 'Mesajınızı buraya yazın...',
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          suffixIcon: IconButton(
-            icon: const Icon(Icons.send),
-            onPressed: () {
-              // Mesaj gönderme işlemleri
-            },
-          ),
+    return const Scaffold(
+      body: DefaultTabController(
+        length: 3,
+        initialIndex: 1, // Keşfet sayfasının index'i 1 olduğu için varsayılan olarak buradan başlayacak
+        child: Column(
+          children: [
+            Expanded(
+              child: TabBarView(
+                children: [
+                  GecmisPage(),
+                  KesfetPage(),
+                  ProfilPage(),
+                ],
+              ),
+            ),
+            TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.chat), text: 'Geçmiş'),
+                Tab(icon: Icon(Icons.explore), text: 'Keşfet'),
+                Tab(icon: Icon(Icons.person), text: 'Profil'),
+              ],
+            ),
+          ],
         ),
       ),
     );

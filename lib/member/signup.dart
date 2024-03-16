@@ -5,7 +5,7 @@ import '../main.dart';
 import 'login.dart'; // Login sayfasının dosyasını ekledik
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+  const SignUpPage({super.key});
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -62,7 +62,7 @@ class _SignUpPageState extends State<SignUpPage> with SingleTickerProviderStateM
                 ),
               ),
               Align(
-                alignment: Alignment(0, 0.25), // Burada Alignment kullanıldı
+                alignment: const Alignment(0, 0.25), // Burada Alignment kullanıldı
                 child: Material(
                   elevation: 5,
                   shadowColor: Colors.black,
@@ -213,7 +213,7 @@ class _SignUpPageState extends State<SignUpPage> with SingleTickerProviderStateM
                                           child: Container(
                                             color: const Color(0xFFE0E0E0),
                                             padding: const EdgeInsets.all(20),
-                                            child: Icon(
+                                            child: const Icon(
                                               Icons.gavel_rounded,
                                               color: Colors.black,
                                             ),
@@ -248,7 +248,7 @@ class _SignUpPageState extends State<SignUpPage> with SingleTickerProviderStateM
                       });
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LoginPage()), // Login sayfasına geçiş
+                        MaterialPageRoute(builder: (context) => const LoginPage()), // Login sayfasına geçiş
                       );
                     },
                     onTapCancel: () {
