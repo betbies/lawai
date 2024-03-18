@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class GecmisPage extends StatelessWidget {
-  const GecmisPage({Key? key});
+  const GecmisPage({super.key});
 
   @override
   Widget build(BuildContext context) {

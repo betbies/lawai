@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    Color koyuSariRenk = Color(int.parse('FFCCBA78', radix: 16));
+    Color koyuSariRenk = Color(int.parse('FF056C89', radix: 16));
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 ),
               ),
               Image.asset(
-                'assets/images/LAWW.jpeg',
+                'assets/images/LAWW.png',
                 height: MediaQuery.of(context).size.height * 0.55,
                 width: MediaQuery.of(context).size.width,
                 fit: BoxFit.fitHeight,
@@ -242,7 +242,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                             : null,
                       ),
                       child: const Text(
-                        'Go To Sign Up',
+                        'KAYIT OL',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20,
