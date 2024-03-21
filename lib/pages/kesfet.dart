@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class KesfetPage extends StatefulWidget {
-  const KesfetPage({Key? key}) : super(key: key);
+  const KesfetPage({super.key});
 
   @override
   _KesfetPageState createState() => _KesfetPageState();
@@ -105,7 +105,7 @@ class _KesfetPageState extends State<KesfetPage> {
       children: [
         Container(
           width: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
             image: DecorationImage(
               image: AssetImage('assets/images/LAWWCON.png'),
@@ -160,7 +160,7 @@ class FadeAnimation extends StatelessWidget {
   final double delay;
   final Widget child;
 
-  const FadeAnimation(this.delay, this.child, {Key? key}) : super(key: key);
+  const FadeAnimation(this.delay, this.child, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +182,7 @@ class FadeAnimation extends StatelessWidget {
 }
 
 class ChatPage extends StatelessWidget {
-  const ChatPage({Key? key}) : super(key: key);
+  const ChatPage({super.key});
 
   @override
   Widget build(BuildContext context) {
