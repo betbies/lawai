@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class KesfetPage extends StatefulWidget {
-  const KesfetPage({super.key});
+  const KesfetPage({Key? key}) : super(key: key);
 
   @override
   _KesfetPageState createState() => _KesfetPageState();
@@ -9,19 +9,21 @@ class KesfetPage extends StatefulWidget {
 
 class _KesfetPageState extends State<KesfetPage> {
   List<Service> services = [
-    Service('Medeni Hukuk', Icons.book),
-    Service('Ceza Hukuku', Icons.security),
-    Service('İdare Hukuku', Icons.assignment),
-    Service('Anayasa Hukuku', Icons.archive),
-    Service('Uluslararası Hukuk', Icons.description),
-    Service('Ticaret Hukuku', Icons.fingerprint),
-    Service('İş Hukuku', Icons.business),
-    Service('X Hukuku', Icons.policy),
-    Service('X Hukuku', Icons.verified_user),
-    Service('X Hukuku', Icons.how_to_vote),
+    Service('Medeni\nHukuk', Icons.book),
+    Service('Ceza\nHukuku', Icons.security),
+    Service('İdare\nHukuku', Icons.assignment),
+    Service('Anayasa\nHukuku', Icons.archive),
+    Service('Uluslararası\nHukuk', Icons.description),
+    Service('Ticaret\nHukuku', Icons.fingerprint),
+    Service('İş\nHukuku', Icons.business),
+    Service('X\nHukuku', Icons.policy),
+    Service('X\nHukuku', Icons.verified_user),
+    Service('X\nHukuku', Icons.how_to_vote),
   ];
 
   int? selectedServiceIndex;
+
+  final String profileImage = 'assets/images/profile_image.png';
 
   @override
   Widget build(BuildContext context) {
@@ -34,19 +36,38 @@ class _KesfetPageState extends State<KesfetPage> {
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverToBoxAdapter(
-                child: FadeAnimation(
-                  1.2,
-                  Padding(
-                    padding: const EdgeInsets.only(top: 120.0),
-                    child: Text(
-                      'Size nasıl yardımcı olabiliriz?',
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.grey.shade900,
-                        fontWeight: FontWeight.bold,
+                child: Column(
+                  children: [
+                    SizedBox(height: 60), // Profil resmi ve "Hoşgeldiniz" yazısını biraz aşağı kaydır
+                    Row(
+                      children: [
+                        Icon(Icons.account_circle, size: 60), // Profil ikonu ekleyin
+                        SizedBox(width: 10),
+                        Text(
+                          'Hoşgeldiniz',
+                          style: TextStyle(
+                            fontStyle: FontStyle.italic,
+                            fontSize: 22,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20), // Diğer içeriklerden önceki boşluk
+                    FadeAnimation(
+                      1.2,
+                      Text(
+                        'Size nasıl yardımcı olabiliriz?',
+                        textAlign: TextAlign.center, // Metni ortala
+                        style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.grey.shade900,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               )
             ];
@@ -70,7 +91,6 @@ class _KesfetPageState extends State<KesfetPage> {
                         setState(() {
                           selectedServiceIndex = selectedServiceIndex == index ? null : index;
                         });
-                        // Eğer seçili hizmete tıklanırsa, chat sayfasını 1 saniye gecikmeli olarak aç
                         Future.delayed(const Duration(seconds: 1), () {
                           Navigator.push(
                             context,
@@ -129,12 +149,16 @@ class _KesfetPageState extends State<KesfetPage> {
               children: <Widget>[
                 Icon(icon, size: 80),
                 const SizedBox(height: 20),
-                Text(name, style: const TextStyle(fontSize: 14)),
+                Text(
+                  name,
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold), // Metni kalın olarak biçimlendir
+                  textAlign: TextAlign.center, // Metni ortala
+                ),
               ],
             ),
           ),
         ),
-        if (isSelected) // Siyah çerçeve sadece seçildiğinde görünür
+        if (isSelected)
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -160,7 +184,7 @@ class FadeAnimation extends StatelessWidget {
   final double delay;
   final Widget child;
 
-  const FadeAnimation(this.delay, this.child, {super.key});
+  const FadeAnimation(this.delay, this.child, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +206,7 @@ class FadeAnimation extends StatelessWidget {
 }
 
 class ChatPage extends StatelessWidget {
-  const ChatPage({super.key});
+  const ChatPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
