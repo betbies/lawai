@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class KesfetPage extends StatefulWidget {
-  const KesfetPage({super.key});
+  const KesfetPage({Key? key}) : super(key: key);
 
   @override
   _KesfetPageState createState() => _KesfetPageState();
@@ -21,15 +21,15 @@ class _KesfetPageState extends State<KesfetPage> {
     Service('X Hukuku', Icons.how_to_vote),
   ];
 
-  int selectedService = -1;
+  int? selectedServiceIndex;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: null, // Floating action button'u kaldırıyoruz
+      floatingActionButton: null,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0), // Sağ ve sola 20 değeri uygulandı
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
@@ -65,9 +65,30 @@ class _KesfetPageState extends State<KesfetPage> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: services.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return FadeAnimation(
-                      (1.0 + index) / 4,
-                      serviceContainer(services[index].icon, services[index].name, index),
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedServiceIndex = selectedServiceIndex == index ? null : index;
+                        });
+                        // Eğer seçili hizmete tıklanırsa, chat sayfasını 1 saniye gecikmeli olarak aç
+                        Future.delayed(const Duration(seconds: 1), () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChatPage(),
+                            ),
+                          );
+                        });
+                      },
+                      child: FadeAnimation(
+                        (1.0 + index) / 4,
+                        serviceContainer(
+                          services[index].icon,
+                          services[index].name,
+                          index,
+                          isSelected: selectedServiceIndex == index,
+                        ),
+                      ),
                     );
                   },
                 ),
@@ -79,58 +100,51 @@ class _KesfetPageState extends State<KesfetPage> {
     );
   }
 
-  Widget serviceContainer(IconData icon, String name, int index) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          if (selectedService == index) {
-            selectedService = -1;
-          } else {
-            selectedService = index;
-          }
-        });
-
-        if (selectedService == index) {
-          // Eğer seçili hizmete tıklanırsa, chat sayfasını 1 saniye gecikmeli olarak aç
-          Future.delayed(const Duration(seconds: 1), () {
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) => const ChatPage(),
-                transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                  return SlideTransition(
-                    position: Tween<Offset>(
-                      begin: const Offset(0.0, -1.0), // Yukarıdan başlangıç pozisyonu
-                      end: Offset.zero, // Yatayda sabit, dikeyde 0'a gelme pozisyonu
-                    ).animate(animation),
-                    child: child,
-                  );
-                },
-              ),
-            );
-          });
-        }
-      },
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0), // Sağ ve sola 20, üst ve alta 10 değeri uygulandı
-        decoration: BoxDecoration(
-          color: selectedService == index ? Colors.blue.shade50 : Colors.grey.shade100,
-          border: Border.all(
-            color: selectedService == index ? const Color(0xFF88B4BE) : Colors.blue.withOpacity(0),
-            width: 2.0,
+  Widget serviceContainer(IconData icon, String name, int index, {bool isSelected = false}) {
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: AssetImage('assets/images/LAWWCON.png'),
+              fit: BoxFit.cover,
+            ),
           ),
-          borderRadius: BorderRadius.circular(80.0),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(icon, size: 80),
-            const SizedBox(height: 20),
-            Text(name, style: const TextStyle(fontSize: 14)),
-          ],
+        Positioned.fill(
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white.withOpacity(0.5),
+            ),
+          ),
         ),
-      ),
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(icon, size: 80),
+                const SizedBox(height: 20),
+                Text(name, style: const TextStyle(fontSize: 14)),
+              ],
+            ),
+          ),
+        ),
+        if (isSelected) // Siyah çerçeve sadece seçildiğinde görünür
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.black,
+                width: 4,
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
@@ -146,7 +160,7 @@ class FadeAnimation extends StatelessWidget {
   final double delay;
   final Widget child;
 
-  const FadeAnimation(this.delay, this.child, {super.key});
+  const FadeAnimation(this.delay, this.child, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +182,7 @@ class FadeAnimation extends StatelessWidget {
 }
 
 class ChatPage extends StatelessWidget {
-  const ChatPage({super.key});
+  const ChatPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -179,7 +193,7 @@ class ChatPage extends StatelessWidget {
       body: const Center(
         child: Text('Chat Sayfası'),
       ),
-      backgroundColor: const Color(0xFFC3E4E9), // Arka plan rengi c3e4e9
+      backgroundColor: const Color(0xFFC3E4E9),
     );
   }
 }
