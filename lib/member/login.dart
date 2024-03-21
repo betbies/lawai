@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    Color koyuSariRenk = Color(int.parse('FF056C89', radix: 16));
+    Color mavi1 = Color(int.parse('FF056C89', radix: 16));
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -62,11 +62,11 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                 ),
               ),
               Align(
-                alignment: const Alignment(0, 0.25),
+                alignment: const Alignment(0, 0.55),
                 child: Material(
                   elevation: 5,
                   shadowColor: Colors.black,
-                  color: koyuSariRenk,
+                  color: mavi1,
                   borderRadius: BorderRadius.circular(32),
                   child: SizedBox(
                     height: MediaQuery.of(context).size.width / sqrt(2) * 1.2,

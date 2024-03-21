@@ -89,6 +89,27 @@ class _KesfetPageState extends State<KesfetPage> {
             selectedService = index;
           }
         });
+
+        if (selectedService == index) {
+          // Eğer seçili hizmete tıklanırsa, chat sayfasını 1 saniye gecikmeli olarak aç
+          Future.delayed(const Duration(seconds: 1), () {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => const ChatPage(),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(0.0, -1.0), // Yukarıdan başlangıç pozisyonu
+                      end: Offset.zero, // Yatayda sabit, dikeyde 0'a gelme pozisyonu
+                    ).animate(animation),
+                    child: child,
+                  );
+                },
+              ),
+            );
+          });
+        }
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
@@ -96,7 +117,7 @@ class _KesfetPageState extends State<KesfetPage> {
         decoration: BoxDecoration(
           color: selectedService == index ? Colors.blue.shade50 : Colors.grey.shade100,
           border: Border.all(
-            color: selectedService == index ? Colors.blue : Colors.blue.withOpacity(0),
+            color: selectedService == index ? const Color(0xFF88B4BE) : Colors.blue.withOpacity(0),
             width: 2.0,
           ),
           borderRadius: BorderRadius.circular(80.0),
@@ -106,7 +127,7 @@ class _KesfetPageState extends State<KesfetPage> {
           children: <Widget>[
             Icon(icon, size: 80),
             const SizedBox(height: 20),
-            Text(name, style: const TextStyle(fontSize: 16)),
+            Text(name, style: const TextStyle(fontSize: 14)),
           ],
         ),
       ),
@@ -142,6 +163,23 @@ class FadeAnimation extends StatelessWidget {
         );
       },
       child: child,
+    );
+  }
+}
+
+class ChatPage extends StatelessWidget {
+  const ChatPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Chat'),
+      ),
+      body: const Center(
+        child: Text('Chat Sayfası'),
+      ),
+      backgroundColor: const Color(0xFFC3E4E9), // Arka plan rengi c3e4e9
     );
   }
 }

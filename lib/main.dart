@@ -9,7 +9,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +26,19 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({Key? key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
+      backgroundColor: const Color(0xFFFFFFFF), // Scaffold'ın arka plan rengini burada ayarlıyoruz
       body: DefaultTabController(
         length: 3,
-        initialIndex: 1, // Keşfet sayfasının index'i 1 olduğu için varsayılan olarak buradan başlayacak
+        initialIndex: 1,
         child: Column(
           children: [
             Expanded(
-              child: TabBarView(
+              child: const TabBarView(
                 children: [
                   GecmisPage(),
                   KesfetPage(),
@@ -46,6 +47,9 @@ class MyHomePage extends StatelessWidget {
               ),
             ),
             TabBar(
+              labelColor: const Color(0xFF88B4BE), // Etiket rengini 88b4be olarak ayarlıyoruz
+              unselectedLabelColor: Colors.black,
+              indicatorColor: const Color(0xFF88B4BE), // Altındaki çubuğun rengini 88b4be olarak ayarlıyoruz
               tabs: [
                 Tab(icon: Icon(Icons.chat), text: 'Geçmiş'),
                 Tab(icon: Icon(Icons.explore), text: 'Keşfet'),

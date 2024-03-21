@@ -36,7 +36,7 @@ class _SignUpPageState extends State<SignUpPage> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    Color koyuSariRenk = Color(int.parse('FF056C89', radix: 16));
+    Color mavi1 = Color(int.parse('FF056C89', radix: 16));
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -62,14 +62,14 @@ class _SignUpPageState extends State<SignUpPage> with SingleTickerProviderStateM
                 ),
               ),
               Align(
-                alignment: const Alignment(0, 0.25), // Burada Alignment kullanıldı
+                alignment: const Alignment(0, 0.55), // Burada Alignment kullanıldı
                 child: Material(
                   elevation: 5,
                   shadowColor: Colors.black,
-                  color: koyuSariRenk,
+                  color: mavi1,
                   borderRadius: BorderRadius.circular(32),
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.width / sqrt(2) * 1.2,
+                    height: MediaQuery.of(context).size.width / sqrt(2) * 1.5,
                     width: MediaQuery.of(context).size.width / sqrt(2) * 1.2,
                     child: Transform.rotate(
                       angle: -pi / 4,
@@ -117,6 +117,33 @@ class _SignUpPageState extends State<SignUpPage> with SingleTickerProviderStateM
                                       borderSide: const BorderSide(color: Color(0xFF000000), width: 1.0),
                                     ),
                                     hintText: 'E-mail',
+                                    hintStyle: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 8), // Araya biraz boşluk ekledik
+                              SizedBox(
+                                width: 250,
+                                child: TextFormField(
+                                  keyboardType: TextInputType.text,
+                                  style: const TextStyle(
+                                    color: Color(0xFF000000),
+                                  ),
+                                  decoration: InputDecoration(
+                                    filled: false,
+                                    contentPadding: const EdgeInsets.all(10),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: const BorderSide(color: Color(0xFF000000), width: 2.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: const BorderSide(color: Color(0xFF000000), width: 1.0),
+                                    ),
+                                    hintText: 'Kullanıcı Adı',
                                     hintStyle: const TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500,
