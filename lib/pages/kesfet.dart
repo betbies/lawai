@@ -35,11 +35,11 @@ class _KesfetPageState extends State<KesfetPage> {
         child: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
-              SliverToBoxAdapter(
+              const SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    const SizedBox(height: 60), // Profil resmi ve "Hoşgeldiniz" yazısını biraz aşağı kaydır
-                    const Row(
+                    SizedBox(height: 60), // Profil resmi ve "Hoşgeldiniz" yazısını biraz aşağı kaydır
+                    Row(
                       children: [
                         Icon(Icons.account_circle, size: 60), // Profil ikonu ekleyin
                         SizedBox(width: 10),
@@ -54,7 +54,7 @@ class _KesfetPageState extends State<KesfetPage> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20), // Diğer içeriklerden önceki boşluk
+                    SizedBox(height: 20), // Diğer içeriklerden önceki boşluk
                     FadeAnimation(
                       1.2,
                       Text(
@@ -207,19 +207,19 @@ class FadeAnimation extends StatelessWidget {
 
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key}) : super(key: key);
+  const ChatPage({super.key});
 
   @override
   _ChatPageState createState() => _ChatPageState();
 }
 
 class _ChatPageState extends State<ChatPage> {
-  TextEditingController _textController = TextEditingController();
-  List<Map<String, dynamic>> _messages = [
+  final TextEditingController _textController = TextEditingController();
+  final List<Map<String, dynamic>> _messages = [
     {'message': 'Merhaba 👋🏻 \nLütfen bana merak ettiğiniz bir şeyi sorun 👍🏻', 'isMe': false}
   ];
 
-  bool _isOnline = true; // Kullanıcının çevrimiçi durumu
+  final bool _isOnline = true; // Kullanıcının çevrimiçi durumu
 
   @override
   Widget build(BuildContext context) {
@@ -227,7 +227,7 @@ class _ChatPageState extends State<ChatPage> {
       appBar: AppBar(
         title: Row(
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               backgroundColor: Colors.grey,
               child: Icon(
                 Icons.account_circle,
@@ -235,15 +235,15 @@ class _ChatPageState extends State<ChatPage> {
                 size: 40.0,
               ),
             ),
-            SizedBox(width: 10.0),
+            const SizedBox(width: 10.0),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'LAW AI',
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 2.0),
+                const SizedBox(height: 2.0),
                 Text(
                   _isOnline ? 'Online' : 'Offline',
                   style: TextStyle(fontSize: 14.0, color: _isOnline ? Colors.green : Colors.red),
@@ -268,7 +268,7 @@ class _ChatPageState extends State<ChatPage> {
                     children: [
                       _messages[index]['isMe']
                           ? Container() // Kullanıcının mesajı olduğunda profil resmi olmayacak
-                          : CircleAvatar(
+                          : const CircleAvatar(
                         backgroundColor: Colors.grey,
                         child: Icon(
                           Icons.account_circle,
@@ -276,12 +276,12 @@ class _ChatPageState extends State<ChatPage> {
                           size: 40.0,
                         ),
                       ),
-                      SizedBox(width: 10.0),
+                      const SizedBox(width: 10.0),
                       Flexible(
                         child: Container(
-                          padding: EdgeInsets.all(12.0),
+                          padding: const EdgeInsets.all(12.0),
                           decoration: BoxDecoration(
-                            color: _messages[index]['isMe'] ? Colors.white : Color(0xFF056C89), // Kullanıcının mesajı olduğunda arkaplan rengi beyaz olacak
+                            color: _messages[index]['isMe'] ? Colors.white : const Color(0xFF056C89), // Kullanıcının mesajı olduğunda arkaplan rengi beyaz olacak
                             borderRadius: BorderRadius.circular(40.0),
                             border: Border.all(
                               color: Colors.black,
@@ -292,14 +292,14 @@ class _ChatPageState extends State<ChatPage> {
                             padding: const EdgeInsets.all(12.0),
                             child: Text(
                               _messages[index]['message'],
-                              style: TextStyle(fontSize: 16.0),
+                              style: const TextStyle(fontSize: 16.0),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(width: 10.0), // Yatay boşluk ekleme
+                      const SizedBox(width: 10.0), // Yatay boşluk ekleme
                       _messages[index]['isMe']
-                          ? CircleAvatar(
+                          ? const CircleAvatar(
                         backgroundColor: Colors.grey,
                         child: Icon(
                           Icons.account_circle,
@@ -329,9 +329,9 @@ class _ChatPageState extends State<ChatPage> {
                     ),
                     child: TextField(
                       controller: _textController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Mesajınızı yazın...',
-                        contentPadding: const EdgeInsets.all(20.0),
+                        contentPadding: EdgeInsets.all(20.0),
                         border: InputBorder.none,
                       ),
                       maxLines: null,
@@ -339,7 +339,7 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(Icons.send),
+                  icon: const Icon(Icons.send),
                   color: Colors.black,
                   iconSize: 32.0,
                   onPressed: () {
@@ -362,7 +362,7 @@ class _ChatPageState extends State<ChatPage> {
 }
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: ChatPage(),
   ));
 }
