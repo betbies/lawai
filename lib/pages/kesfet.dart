@@ -9,16 +9,16 @@ class KesfetPage extends StatefulWidget {
 
 class _KesfetPageState extends State<KesfetPage> {
   List<Service> services = [
-    Service('Medeni\nHukuk', Icons.book),
-    Service('Ceza\nHukuku', Icons.security),
-    Service('İdare\nHukuku', Icons.assignment),
-    Service('Anayasa\nHukuku', Icons.archive),
-    Service('Uluslararası\nHukuk', Icons.description),
-    Service('Ticaret\nHukuku', Icons.fingerprint),
-    Service('İş\nHukuku', Icons.business),
-    Service('X\nHukuku', Icons.policy),
-    Service('X\nHukuku', Icons.verified_user),
-    Service('X\nHukuku', Icons.how_to_vote),
+    Service('Medeni\nHukuk'),
+    Service('Ceza\nHukuku'),
+    Service('İdare\nHukuku'),
+    Service('Anayasa\nHukuku'),
+    Service('Uluslararası\nHukuk'),
+    Service('Ticaret\nHukuku'),
+    Service('İş\nHukuku'),
+    Service('X\nHukuku'),
+    Service('X\nHukuku'),
+    Service('X\nHukuku'),
   ];
 
   int? selectedServiceIndex;
@@ -41,7 +41,6 @@ class _KesfetPageState extends State<KesfetPage> {
                     SizedBox(height: 60), // Profil resmi ve "Hoşgeldiniz" yazısını biraz aşağı kaydır
                     Row(
                       children: [
-                        Icon(Icons.account_circle, size: 60), // Profil ikonu ekleyin
                         SizedBox(width: 10),
                         Text(
                           'Hoşgeldiniz',
@@ -103,7 +102,6 @@ class _KesfetPageState extends State<KesfetPage> {
                       child: FadeAnimation(
                         (1.0 + index) / 4,
                         serviceContainer(
-                          services[index].icon,
                           services[index].name,
                           index,
                           isSelected: selectedServiceIndex == index,
@@ -120,7 +118,7 @@ class _KesfetPageState extends State<KesfetPage> {
     );
   }
 
-  Widget serviceContainer(IconData icon, String name, int index, {bool isSelected = false}) {
+  Widget serviceContainer(String name, int index, {bool isSelected = false}) {
     return Stack(
       children: [
         Container(
@@ -147,7 +145,6 @@ class _KesfetPageState extends State<KesfetPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Icon(icon, size: 80),
                 const SizedBox(height: 20),
                 Text(
                   name,
@@ -175,9 +172,8 @@ class _KesfetPageState extends State<KesfetPage> {
 
 class Service {
   final String name;
-  final IconData icon;
 
-  Service(this.name, this.icon);
+  Service(this.name);
 }
 
 class FadeAnimation extends StatelessWidget {
@@ -205,7 +201,6 @@ class FadeAnimation extends StatelessWidget {
   }
 }
 
-
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
 
@@ -224,138 +219,116 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+        appBar: AppBar(
         title: Row(
-          children: [
-            const CircleAvatar(
-              backgroundColor: Colors.grey,
-              child: Icon(
-                Icons.account_circle,
-                color: Colors.white,
-                size: 40.0,
+        children: [
+        const SizedBox(width: 10.0),
+    Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+    const Text(
+    'LAW AI',
+    style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+    ),
+    const SizedBox(height: 2.0),
+    Text(
+    _isOnline ? 'Online' : 'Offline',
+    style: TextStyle(fontSize: 14.0, color: _isOnline ? Colors.green : Colors.red),
+    ),
+    ],
+    ),
+    ],
+    ),
+    ),
+    body: Column(
+    children: [
+    Expanded(
+    child: ListView.builder(
+    reverse: true,
+    itemCount: _messages.length,
+    itemBuilder: (BuildContext context, int index) {
+    return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: _messages[index]['isMe'] ? MainAxisAlignment.end : MainAxisAlignment.start,
+        children: [
+          _messages[index]['isMe']
+              ? Container() // Kullanıcının mesajı olduğunda profil resmi olmayacak
+              : Container(),
+          const SizedBox(width: 10.0),
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.all(12.0),
+              decoration: BoxDecoration(
+                color: _messages[index]['isMe'] ? Colors.white : const Color(0xFF056C89), // Kullanıcının mesajı olduğunda arkaplan rengi beyaz olacak
+                borderRadius: BorderRadius.circular(40.0),
+                border: Border.all(
+                  color: Colors.black,
+                  width: 2.0,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Text(
+                  _messages[index]['message'],
+                  style: const TextStyle(fontSize: 16.0),
+                ),
               ),
             ),
-            const SizedBox(width: 10.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'LAW AI',
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(width: 10.0), // Yatay boşluk ekleme
+          _messages[index]['isMe']
+              ? Container()
+              : Container(),
+        ],
+      ),
+    );
+    },
+    ),
+    ),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40.0),
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 2.0,
+                  ),
                 ),
-                const SizedBox(height: 2.0),
-                Text(
-                  _isOnline ? 'Online' : 'Offline',
-                  style: TextStyle(fontSize: 14.0, color: _isOnline ? Colors.green : Colors.red),
+                child: TextField(
+                  controller: _textController,
+                  decoration: const InputDecoration(
+                    hintText: 'Mesajınızı yazın...',
+                    contentPadding: EdgeInsets.all(20.0),
+                    border: InputBorder.none,
+                  ),
+                  maxLines: null,
                 ),
-              ],
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.send),
+              color: Colors.black,
+              iconSize: 32.0,
+              onPressed: () {
+                if (_textController.text.isNotEmpty) {
+                  setState(() {
+                    _messages.insert(0, {'message': _textController.text, 'isMe': true});
+                    _textController.clear();
+                  });
+                }
+              },
             ),
           ],
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              reverse: true,
-              itemCount: _messages.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: _messages[index]['isMe'] ? MainAxisAlignment.end : MainAxisAlignment.start,
-                    children: [
-                      _messages[index]['isMe']
-                          ? Container() // Kullanıcının mesajı olduğunda profil resmi olmayacak
-                          : const CircleAvatar(
-                        backgroundColor: Colors.grey,
-                        child: Icon(
-                          Icons.account_circle,
-                          color: Colors.white,
-                          size: 40.0,
-                        ),
-                      ),
-                      const SizedBox(width: 10.0),
-                      Flexible(
-                        child: Container(
-                          padding: const EdgeInsets.all(12.0),
-                          decoration: BoxDecoration(
-                            color: _messages[index]['isMe'] ? Colors.white : const Color(0xFF056C89), // Kullanıcının mesajı olduğunda arkaplan rengi beyaz olacak
-                            borderRadius: BorderRadius.circular(40.0),
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 2.0,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              _messages[index]['message'],
-                              style: const TextStyle(fontSize: 16.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 10.0), // Yatay boşluk ekleme
-                      _messages[index]['isMe']
-                          ? const CircleAvatar(
-                        backgroundColor: Colors.grey,
-                        child: Icon(
-                          Icons.account_circle,
-                          color: Colors.white,
-                          size: 40.0,
-                        ),
-                      )
-                          : Container(), // Diğer kişinin mesajı olduğunda profil resmi olmayacak
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40.0),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 2.0,
-                      ),
-                    ),
-                    child: TextField(
-                      controller: _textController,
-                      decoration: const InputDecoration(
-                        hintText: 'Mesajınızı yazın...',
-                        contentPadding: EdgeInsets.all(20.0),
-                        border: InputBorder.none,
-                      ),
-                      maxLines: null,
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  color: Colors.black,
-                  iconSize: 32.0,
-                  onPressed: () {
-                    if (_textController.text.isNotEmpty) {
-                      setState(() {
-                        _messages.insert(0, {'message': _textController.text, 'isMe': true});
-                        _textController.clear();
-                      });
-                    }
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    ],
+    ),
       backgroundColor: const Color(0xFFC3E4E9),
     );
   }
@@ -366,3 +339,4 @@ void main() {
     home: ChatPage(),
   ));
 }
+
