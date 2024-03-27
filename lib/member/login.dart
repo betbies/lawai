@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
 import '../main.dart';
-import 'signup.dart'; // Eklediğimiz dosya import edildi.
+import 'signup.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,7 +11,8 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
+class _LoginPageState extends State<LoginPage>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late ConfettiController _confettiController;
@@ -31,7 +32,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
         curve: Curves.easeInOut,
       ),
     );
-    _confettiController = ConfettiController(duration: const Duration(seconds: 2));
+    _confettiController =
+        ConfettiController(duration: const Duration(seconds: 2));
   }
 
   @override
@@ -42,7 +44,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: SizedBox(
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height -
+              MediaQuery.of(context).viewInsets.bottom,
           child: Stack(
             children: <Widget>[
               Positioned.fill(
@@ -110,11 +113,13 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                     contentPadding: const EdgeInsets.all(10),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(25.0),
-                                      borderSide: const BorderSide(color: Color(0xFF000000), width: 2.0),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xFF000000), width: 2.0),
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(25.0),
-                                      borderSide: const BorderSide(color: Color(0xFF000000), width: 1.0),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xFF000000), width: 1.0),
                                     ),
                                     hintText: 'E-mail',
                                     hintStyle: const TextStyle(
@@ -124,7 +129,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 8), // Araya biraz boşluk ekledik
+                              const SizedBox(height: 8),
                               SizedBox(
                                 width: 250,
                                 child: TextFormField(
@@ -138,11 +143,13 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                     contentPadding: const EdgeInsets.all(10),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(25.0),
-                                      borderSide: const BorderSide(color: Color(0xFF000000), width: 2.0),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xFF000000), width: 2.0),
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(25.0),
-                                      borderSide: const BorderSide(color: Color(0xFF000000), width: 1.0),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xFF000000), width: 1.0),
                                     ),
                                     hintText: 'Şifre',
                                     hintStyle: const TextStyle(
@@ -157,11 +164,13 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                 onTap: () {
                                   _animationController.forward();
                                   _confettiController.play();
-                                  Future.delayed(const Duration(milliseconds: 300), () {
+                                  Future.delayed(
+                                      const Duration(milliseconds: 300), () {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const MyHomePage(),
+                                        builder: (context) =>
+                                        const MyHomePage(),
                                       ),
                                     );
                                     _animationController.reverse();
@@ -177,7 +186,8 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                                           decoration: BoxDecoration(
                                             boxShadow: [
                                               BoxShadow(
-                                                color: const Color(0xFF000000).withOpacity(0.5),
+                                                color: const Color(0xFF000000)
+                                                    .withOpacity(0.5),
                                                 blurRadius: 15,
                                               ),
                                             ],
@@ -204,7 +214,6 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                   ),
                 ),
               ),
-              // Yeni kod buradan başlıyor
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
@@ -221,7 +230,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                       });
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const SignUpPage()), // SignUpPage'e geçiş
+                        MaterialPageRoute(
+                            builder: (context) =>
+                            const SignUpPage()), // SignUpPage'e geçiş
                       );
                     },
                     onTapCancel: () {
@@ -234,7 +245,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
                         boxShadow: _loginPressed
                             ? [
                           BoxShadow(
-                            color: Colors.black.withOpacity(1.0), // Değişiklik burada yapıldı
+                            color: Colors.black.withOpacity(1.0),
                             blurRadius: 60,
                             offset: const Offset(0, 3),
                           ),
