@@ -31,6 +31,7 @@ dependencies:
 
   confetti: ^0.6.0
   image_picker: ^0.8.4+4
+  shared_preferences: ^2.0.8
 
   flutter:
 

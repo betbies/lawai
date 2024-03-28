@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});
@@ -19,6 +20,7 @@ class _ProfilPageState extends State<ProfilPage> {
   final TextEditingController _tempPhoneController = TextEditingController();
 
   File? _image;
+  late SharedPreferences _prefs;
 
   @override
   void initState() {
@@ -26,6 +28,23 @@ class _ProfilPageState extends State<ProfilPage> {
     _tempNameController.text = _nameController.text;
     _tempEmailController.text = _emailController.text;
     _tempPhoneController.text = _phoneController.text;
+
+    _loadImageFromPrefs();
+  }
+
+  _loadImageFromPrefs() async {
+    _prefs = await SharedPreferences.getInstance();
+    String? imagePath = _prefs.getString('profile_image');
+    if (imagePath != null) {
+      setState(() {
+        _image = File(imagePath);
+      });
+    }
+  }
+
+  _saveImageToPrefs(String imagePath) async {
+    _prefs = await SharedPreferences.getInstance();
+    _prefs.setString('profile_image', imagePath);
   }
 
   @override
@@ -217,6 +236,7 @@ class _ProfilPageState extends State<ProfilPage> {
     );
 
     if (pickedFile != null) {
+      _saveImageToPrefs(pickedFile.path);
       setState(() {
         _image = File(pickedFile.path);
       });
