@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class KesfetPage extends StatefulWidget {
-  const KesfetPage({Key? key}) : super(key: key);
+  const KesfetPage({super.key});
 
   @override
   _KesfetPageState createState() => _KesfetPageState();
@@ -40,7 +40,7 @@ class _KesfetPageState extends State<KesfetPage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: NestedScrollView(
-          physics: NeverScrollableScrollPhysics(),  // Kaydırma işlevselliğini devre dışı bırakır
+          physics: const NeverScrollableScrollPhysics(),  // Kaydırma işlevselliğini devre dışı bırakır
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               const SliverToBoxAdapter(
@@ -120,7 +120,7 @@ class _KesfetPageState extends State<KesfetPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              Text(
+              const Text(
                 'Popüler Sorular',
                 style: TextStyle(
                   fontSize: 24,
@@ -136,19 +136,19 @@ class _KesfetPageState extends State<KesfetPage> {
                     return ListTile(
                       title: Text(
                         popularQuestions[index],
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
-                      trailing: Icon(Icons.arrow_forward),
+                      trailing: const Icon(Icons.arrow_forward),
                       onTap: () {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: Text('Popüler Soru'),
+                              title: const Text('Popüler Soru'),
                               content: Text(popularQuestions[index]),
                               actions: <Widget>[
                                 TextButton(
-                                  child: Text('Kapat'),
+                                  child: const Text('Kapat'),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
@@ -197,10 +197,10 @@ class _KesfetPageState extends State<KesfetPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
                   name,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -232,7 +232,7 @@ class FadeAnimation extends StatelessWidget {
   final double delay;
   final Widget child;
 
-  const FadeAnimation(this.delay, this.child, {Key? key}) : super(key: key);
+  const FadeAnimation(this.delay, this.child, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -254,7 +254,7 @@ class FadeAnimation extends StatelessWidget {
 }
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key}) : super(key: key);
+  const ChatPage({super.key});
 
   @override
   _ChatPageState createState() => _ChatPageState();
