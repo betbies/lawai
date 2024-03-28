@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class KesfetPage extends StatefulWidget {
-  const KesfetPage({Key? key}) : super(key: key);
+  const KesfetPage({super.key});
 
   @override
   _KesfetPageState createState() => _KesfetPageState();
@@ -114,7 +114,7 @@ class _KesfetPageState extends State<KesfetPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: ExpansionTile(
                   title: const Text(
@@ -224,7 +224,7 @@ class FadeAnimation extends StatelessWidget {
   final double delay;
   final Widget child;
 
-  const FadeAnimation(this.delay, this.child, {Key? key}) : super(key: key);
+  const FadeAnimation(this.delay, this.child, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -246,7 +246,7 @@ class FadeAnimation extends StatelessWidget {
 }
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key}) : super(key: key);
+  const ChatPage({super.key});
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -255,7 +255,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _textController = TextEditingController();
   final List<Map<String, dynamic>> _messages = [
-    {'message': 'Merhaba 👋🏻 \nLütfen bana merak ettiğiniz bir şeyi sorun 👍🏻', 'isMe': false, 'color': Color(0xFF88B4BE)}
+    {'message': 'Merhaba 👋🏻 \nLütfen bana merak ettiğiniz bir şeyi sorun 👍🏻', 'isMe': false, 'color': const Color(0xFF88B4BE)}
   ];
 
   final bool _isOnline = true;
@@ -288,7 +288,7 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           Positioned.fill(
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/LAWW3.png'),
                   fit: BoxFit.cover,

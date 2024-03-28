@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class GecmisPage extends StatelessWidget {
-  const GecmisPage({Key? key}) : super(key: key);
+  const GecmisPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +23,8 @@ class GecmisPage extends StatelessWidget {
           itemBuilder: (context, index) {
             final sohbet = gecmisSohbetler[index];
             final gradientColors = [
-              Color(0xFF88B4BE), // ilk renk
-              Color(0xFF056C89), // ikinci renk
+              const Color(0xFF88B4BE), // ilk renk
+              const Color(0xFF056C89), // ikinci renk
             ];
             return GestureDetector(
               onTap: () {
