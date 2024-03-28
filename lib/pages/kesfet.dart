@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class KesfetPage extends StatefulWidget {
-  const KesfetPage({super.key});
+  const KesfetPage({Key? key}) : super(key: key);
 
   @override
   _KesfetPageState createState() => _KesfetPageState();
@@ -23,7 +23,6 @@ class _KesfetPageState extends State<KesfetPage> {
 
   int? selectedServiceIndex;
 
-  // Popüler sorular için liste oluşturma
   List<String> popularQuestions = [
     'Boşanma süreci nasıldır?',
     'Trafik cezası nasıl itiraz edilir?',
@@ -36,11 +35,9 @@ class _KesfetPageState extends State<KesfetPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: null,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: NestedScrollView(
-          physics: const NeverScrollableScrollPhysics(),  // Kaydırma işlevselliğini devre dışı bırakır
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               const SliverToBoxAdapter(
@@ -62,16 +59,13 @@ class _KesfetPageState extends State<KesfetPage> {
                       ],
                     ),
                     SizedBox(height: 20),
-                    FadeAnimation(
-                      1.2,
-                      Text(
-                        'Size nasıl yardımcı olabiliriz?',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 30,
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    Text(
+                      'Size nasıl yardımcı olabiliriz?',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.black87,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
@@ -120,22 +114,21 @@ class _KesfetPageState extends State<KesfetPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
-                'Popüler Sorular',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.black87,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 10),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: popularQuestions.length,
-                  itemBuilder: (BuildContext context, int index) {
+              Container(
+                width: double.infinity,
+                child: ExpansionTile(
+                  title: const Text(
+                    'Popüler Sorular',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.black87,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  children: popularQuestions.map((question) {
                     return ListTile(
                       title: Text(
-                        popularQuestions[index],
+                        question,
                         style: const TextStyle(fontSize: 16),
                       ),
                       trailing: const Icon(Icons.arrow_forward),
@@ -145,7 +138,7 @@ class _KesfetPageState extends State<KesfetPage> {
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: const Text('Popüler Soru'),
-                              content: Text(popularQuestions[index]),
+                              content: Text(question),
                               actions: <Widget>[
                                 TextButton(
                                   child: const Text('Kapat'),
@@ -159,7 +152,7 @@ class _KesfetPageState extends State<KesfetPage> {
                         );
                       },
                     );
-                  },
+                  }).toList(),
                 ),
               ),
             ],
@@ -168,7 +161,6 @@ class _KesfetPageState extends State<KesfetPage> {
       ),
     );
   }
-
 
   Widget serviceContainer(String name, int index, {bool isSelected = false}) {
     return Stack(
@@ -232,29 +224,29 @@ class FadeAnimation extends StatelessWidget {
   final double delay;
   final Widget child;
 
-  const FadeAnimation(this.delay, this.child, {super.key});
+  const FadeAnimation(this.delay, this.child, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
-        tween: Tween(begin: 0.0, end: 1.0),
-    duration: Duration(milliseconds: (500 * delay).round()),
-    builder: (BuildContext context, double value, Widget? child) {
-      return Opacity(
-        opacity: value,
-        child: Transform.translate(
-          offset: Offset(0.0, 30 * (1 - value)),
-          child: child,
-        ),
-      );
-    },
+      tween: Tween(begin: 0.0, end: 1.0),
+      duration: Duration(milliseconds: (500 * delay).round()),
+      builder: (BuildContext context, double value, Widget? child) {
+        return Opacity(
+          opacity: value,
+          child: Transform.translate(
+            offset: Offset(0.0, 30 * (1 - value)),
+            child: child,
+          ),
+        );
+      },
       child: child,
     );
   }
 }
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+  const ChatPage({Key? key}) : super(key: key);
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -263,10 +255,10 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _textController = TextEditingController();
   final List<Map<String, dynamic>> _messages = [
-    {'message': 'Merhaba 👋🏻 \nLütfen bana merak ettiğiniz bir şeyi sorun 👍🏻', 'isMe': false}
+    {'message': 'Merhaba 👋🏻 \nLütfen bana merak ettiğiniz bir şeyi sorun 👍🏻', 'isMe': false, 'color': Color(0xFF88B4BE)}
   ];
 
-  final bool _isOnline = true; // Kullanıcının çevrimiçi durumu
+  final bool _isOnline = true;
 
   @override
   Widget build(BuildContext context) {
@@ -292,92 +284,115 @@ class _ChatPageState extends State<ChatPage> {
           ],
         ),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: ListView.builder(
-              reverse: true,
-              itemCount: _messages.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: _messages[index]['isMe'] ? MainAxisAlignment.end : MainAxisAlignment.start,
-                    children: [
-                      _messages[index]['isMe']
-                          ? Container() // Kullanıcının mesajı olduğunda profil resmi olmayacak
-                          : Container(),
-                      const SizedBox(width: 10.0),
-                      Flexible(
-                        child: Container(
-                          padding: const EdgeInsets.all(12.0),
-                          decoration: BoxDecoration(
-                            color: _messages[index]['isMe'] ? Colors.white : const Color(0xFF056C89), // Kullanıcının mesajı olduğunda arkaplan rengi beyaz olacak
-                            borderRadius: BorderRadius.circular(40.0),
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 2.0,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              _messages[index]['message'],
-                              style: const TextStyle(fontSize: 16.0),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 10.0), // Yatay boşluk ekleme
-                      _messages[index]['isMe']
-                          ? Container()
-                          : Container(),
-                    ],
-                  ),
-                );
-              },
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/LAWW3.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40.0),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 2.0,
+          Positioned.fill(
+            child: Container(
+              color: Colors.white.withOpacity(0.6),
+            ),
+          ),
+          Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  reverse: true,
+                  itemCount: _messages.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: _messages[index]['isMe'] ? MainAxisAlignment.end : MainAxisAlignment.start,
+                        children: [
+                          _messages[index]['isMe']
+                              ? Container()
+                              : Container(),
+                          const SizedBox(width: 10.0),
+                          Flexible(
+                            child: Container(
+                              padding: const EdgeInsets.all(12.0),
+                              decoration: BoxDecoration(
+                                color: _messages[index]['color'],
+                                borderRadius: BorderRadius.circular(40.0),
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 2.0,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Text(
+                                  _messages[index]['message'],
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: _messages[index]['isMe'] ? Colors.black : Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10.0),
+                          _messages[index]['isMe']
+                              ? Container()
+                              : Container(),
+                        ],
                       ),
-                    ),
-                    child: TextField(
-                      controller: _textController,
-                      decoration: const InputDecoration(
-                        hintText: 'Mesajınızı yazın...',
-                        contentPadding: EdgeInsets.all(20.0),
-                        border: InputBorder.none,
-                      ),
-                      maxLines: null,
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.send),
-                  color: Colors.black,
-                  iconSize: 32.0,
-                  onPressed: () {
-                    if (_textController.text.isNotEmpty) {
-                      setState(() {
-                        _messages.insert(0, {'message': _textController.text, 'isMe': true});
-                        _textController.clear();
-                      });
-                    }
+                    );
                   },
                 ),
-              ],
-            ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40.0),
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 2.0,
+                          ),
+                          color: Colors.white,
+                        ),
+                        child: TextField(
+                          controller: _textController,
+                          decoration: const InputDecoration(
+                            hintText: 'Mesajınızı yazın...',
+                            contentPadding: EdgeInsets.all(20.0),
+                            border: InputBorder.none,
+                          ),
+                          maxLines: null,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.send),
+                      color: Colors.black,
+                      iconSize: 32.0,
+                      onPressed: () {
+                        if (_textController.text.isNotEmpty) {
+                          setState(() {
+                            _messages.insert(0, {'message': _textController.text, 'isMe': true, 'color': Colors.white});
+                            _textController.clear();
+                          });
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -391,4 +406,3 @@ void main() {
     home: KesfetPage(),
   ));
 }
-

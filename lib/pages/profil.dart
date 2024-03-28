@@ -220,6 +220,13 @@ class _ProfilPageState extends State<ProfilPage> {
                     _getImage(ImageSource.gallery);
                   },
                 ),
+                ListTile(
+                  leading: const Icon(Icons.delete),
+                  title: const Text("Resmi Kaldır"),
+                  onTap: () {
+                    _removeImage();
+                  },
+                ),
               ],
             ),
           ),
@@ -241,6 +248,14 @@ class _ProfilPageState extends State<ProfilPage> {
         _image = File(pickedFile.path);
       });
     }
+  }
+
+  _removeImage() async {
+    _prefs = await SharedPreferences.getInstance();
+    _prefs.remove('profile_image');
+    setState(() {
+      _image = null;
+    });
   }
 
   Widget _buildTextField(TextEditingController controller, String labelText) {

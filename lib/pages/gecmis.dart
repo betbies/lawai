@@ -1,38 +1,65 @@
 import 'package:flutter/material.dart';
 
 class GecmisPage extends StatelessWidget {
-  const GecmisPage({super.key});
+  const GecmisPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Geçmiş Sohbetler'),
+        title: const Text(
+          'Geçmiş Sohbetler',
+          style: TextStyle(color: Colors.black),
+        ),
         backgroundColor: Colors.white,
-        elevation: 0, // App Bar'ın gölgesini kaldırır
-        iconTheme: const IconThemeData(color: Colors.black), // Geri butonunun rengini ayarlar
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
-      body: Container(
-        padding: const EdgeInsets.all(16),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: ListView.builder(
           itemCount: gecmisSohbetler.length,
           itemBuilder: (context, index) {
             final sohbet = gecmisSohbetler[index];
+            final gradientColors = [
+              Color(0xFF88B4BE), // ilk renk
+              Color(0xFF056C89), // ikinci renk
+            ];
             return GestureDetector(
               onTap: () {
-                _showPopup(context, sohbet); // Butona tıklandığında popup göstermek için
+                _showPopup(context, sohbet);
               },
               child: Card(
-                color: const Color(0xFF056C89), // Buton arka plan rengi
-                elevation: 2, // Kartın gölgesini ayarlar
+                elevation: 5,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40.0), // Kartın kenar yuvarlaklığını ayarlar
+                  borderRadius: BorderRadius.circular(40.0),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    sohbet,
-                    style: const TextStyle(fontSize: 18),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40.0),
+                    gradient: LinearGradient(
+                      colors: gradientColors,
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          sohbet,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const Icon(Icons.arrow_forward, color: Colors.black),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -64,12 +91,15 @@ void _showPopup(BuildContext context, String sohbet) {
   );
 }
 
-// Geçmiş sohbetlerin listesi (örnek veri)
 List<String> gecmisSohbetler = [
   'Geçmiş Sohbet 1',
   'Geçmiş Sohbet 2',
   'Geçmiş Sohbet 3',
   'Geçmiş Sohbet 4',
   'Geçmiş Sohbet 5',
-  // İsterseniz bu listeyi dilediğiniz gibi genişletebilirsiniz
+  'Geçmiş Sohbet 6',
+  'Geçmiş Sohbet 7',
+  'Geçmiş Sohbet 8',
+  'Geçmiş Sohbet 9',
+  'Geçmiş Sohbet 10',
 ];
