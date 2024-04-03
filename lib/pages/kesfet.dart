@@ -39,52 +39,20 @@ class _KesfetPageState extends State<KesfetPage> {
   ];
 
   int? selectedServiceIndex;
-  String? _profileImage;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadProfileImage();
-  }
-
-  _loadProfileImage() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _profileImage = prefs.getString('profile_image');
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Row(
-          children: [
-            _profileImage != null
-                ? CircleAvatar(
-              backgroundImage: FileImage(File(_profileImage!)),
-            )
-                : CircleAvatar(
-              child: Icon(Icons.person),
-            ),
-            const SizedBox(width: 10.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Hoşgeldiniz',
-                  style: TextStyle(
-                    fontStyle: FontStyle.italic,
-                    fontSize: 22,
-                    color: Colors.black87,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 2.0),
-              ],
-            ),
-          ],
+        title: const Text(
+          'Hoşgeldiniz',
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+            fontSize: 22,
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         actions: [
           IconButton(
@@ -234,10 +202,10 @@ class _KesfetPageState extends State<KesfetPage> {
           content: Text(message),
           actions: <Widget>[
             TextButton(
-              child: const Text('Tamam'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              child: const Text('Kapat'),
             ),
           ],
         );
@@ -267,6 +235,29 @@ class _ChatPageState extends State<ChatPage> {
     {'message': 'Merhaba 👋🏻 \nLütfen bana merak ettiğiniz bir şeyi sorun', 'isMe': false, 'color': const Color(0xFF056C89)}
   ];
   final bool _isOnline = true;
+
+  String? _profileImage;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileImage();
+  }
+
+  _loadProfileImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _profileImage = prefs.getString('profile_image');
+    });
+  }
+
+  _saveProfileImage(String imagePath) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('profile_image', imagePath);
+    setState(() {
+      _profileImage = imagePath;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -373,7 +364,7 @@ class _ChatPageState extends State<ChatPage> {
                   },
                 ),
               ),
-              if (widget.allowSendMessage)
+              if(widget.allowSendMessage)
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
