@@ -193,7 +193,7 @@ class _GecmisPageState extends State<GecmisPage> {
 class ChatPage extends StatefulWidget {
   final String sohbet;
 
-  const ChatPage({Key? key, required this.sohbet}) : super(key: key);
+  const ChatPage({super.key, required this.sohbet});
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -276,7 +276,7 @@ class _ChatPageState extends State<ChatPage> {
                         children: [
                           _messages[index]['isMe']
                               ? Container()
-                              : CircleAvatar(
+                              : const CircleAvatar(
                             backgroundImage: AssetImage('assets/images/LAWWCON.png'), // Profil resmi
                           ),
                           const SizedBox(width: 10.0),
@@ -312,11 +312,11 @@ class _ChatPageState extends State<ChatPage> {
                               : Container(
                             width: 40.0,
                             height: 40.0,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.grey,
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(Icons.person, color: Colors.white),
+                            child: const Icon(Icons.person, color: Colors.white),
                           ))
                               : Container(), // Profil resmi eklendi
                         ],

@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -10,7 +9,7 @@ void main() {
 }
 
 class KesfetPage extends StatefulWidget {
-  const KesfetPage({Key? key}) : super(key: key);
+  const KesfetPage({super.key});
 
   @override
   _KesfetPageState createState() => _KesfetPageState();
@@ -39,20 +38,58 @@ class _KesfetPageState extends State<KesfetPage> {
   ];
 
   int? selectedServiceIndex;
+  String? _profileImage; // Kullanıcının profil resminin yolunu saklamak için değişken
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileImage(); // Profil resmini yükle
+  }
+
+  _loadProfileImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _profileImage = prefs.getString('profile_image');
+    });
+  }
+
+  _saveProfileImage(String imagePath) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('profile_image', imagePath);
+    setState(() {
+      _profileImage = imagePath;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          'Hoşgeldiniz',
-          style: TextStyle(
-            fontStyle: FontStyle.italic,
-            fontSize: 22,
-            color: Colors.black87,
-            fontWeight: FontWeight.bold,
-          ),
+        title: Row(
+          children: [
+            const SizedBox(width: 10.0),
+            _profileImage != null
+                ? CircleAvatar(
+              radius: 16,
+              backgroundImage: FileImage(File(_profileImage!)),
+            )
+                : const CircleAvatar(
+              radius: 16,
+              backgroundColor: Colors.grey,
+              child: Icon(Icons.person, color: Colors.white),
+            ), // Profil resmi veya varsayılan simge
+            const SizedBox(width: 10.0),
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Hoşgeldiniz',
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ],
         ),
         actions: [
           IconButton(
@@ -145,12 +182,12 @@ class _KesfetPageState extends State<KesfetPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ChatPage(allowSendMessage: false),
+                            builder: (context) => const ChatPage(allowSendMessage: false),
                           ),
                         );
                       },
                     );
-                  }).toList(),
+                  }),
                 ],
               ),
             ),
@@ -202,10 +239,10 @@ class _KesfetPageState extends State<KesfetPage> {
           content: Text(message),
           actions: <Widget>[
             TextButton(
+              child: const Text('Tamam'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Kapat'),
             ),
           ],
         );
@@ -223,7 +260,7 @@ class Service {
 class ChatPage extends StatefulWidget {
   final bool allowSendMessage;
 
-  const ChatPage({Key? key, this.allowSendMessage = true}) : super(key: key);
+  const ChatPage({super.key, this.allowSendMessage = true});
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -315,7 +352,7 @@ class _ChatPageState extends State<ChatPage> {
                         children: [
                           _messages[index]['isMe']
                               ? Container()
-                              : CircleAvatar(
+                              : const CircleAvatar(
                             backgroundImage: AssetImage('assets/images/LAWWCON.png'), // Profil resmi
                           ),
                           const SizedBox(width: 10.0),
@@ -351,11 +388,11 @@ class _ChatPageState extends State<ChatPage> {
                               : Container(
                             width: 40.0,
                             height: 40.0,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.grey,
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(Icons.person, color: Colors.white),
+                            child: const Icon(Icons.person, color: Colors.white),
                           ))
                               : Container(), // Profil resmi eklendi
                         ],
@@ -364,7 +401,7 @@ class _ChatPageState extends State<ChatPage> {
                   },
                 ),
               ),
-              if(widget.allowSendMessage)
+              if (widget.allowSendMessage)
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
