@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class KesfetPage extends StatefulWidget {
-  const KesfetPage({super.key});
+  const KesfetPage({Key? key}) : super(key: key);
 
   @override
   _KesfetPageState createState() => _KesfetPageState();
@@ -9,19 +9,17 @@ class KesfetPage extends StatefulWidget {
 
 class _KesfetPageState extends State<KesfetPage> {
   List<Service> services = [
-    Service('Medeni\nHukuk'),
-    Service('Ceza\nHukuku'),
-    Service('İdare\nHukuku'),
-    Service('Anayasa\nHukuku'),
-    Service('Uluslararası\nHukuk'),
-    Service('Ticaret\nHukuku'),
-    Service('İş\nHukuku'),
-    Service('X\nHukuku'),
-    Service('X\nHukuku'),
-    Service('X\nHukuku'),
+    Service('Medeni Hukuk'),
+    Service('Ceza Hukuku'),
+    Service('İdare Hukuku'),
+    Service('Anayasa Hukuku'),
+    Service('Uluslararası Hukuk'),
+    Service('Ticaret Hukuku'),
+    Service('İş Hukuku'),
+    Service('X Hukuku'),
+    Service('X Hukuku'),
+    Service('X Hukuku'),
   ];
-
-  int? selectedServiceIndex;
 
   List<String> popularQuestions = [
     'Boşanma süreci nasıldır?',
@@ -31,101 +29,90 @@ class _KesfetPageState extends State<KesfetPage> {
     'Velayet davası nasıl açılır?',
   ];
 
+  int? selectedServiceIndex;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              const SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    SizedBox(height: 60),
-                    Row(
-                      children: [
-                        SizedBox(width: 10),
-                        Text(
-                          'Hoşgeldiniz',
-                          style: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            fontSize: 22,
-                            color: Colors.black87,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+      appBar: AppBar(
+        title: const Text(
+          'Hoşgeldiniz',
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+            fontSize: 22,
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              // Düzenle butonuna tıklandığında yapılacak işlemler
+            },
+          ),
+        ],
+      ),
+      body: Stack(
+        children: [
+          Image.asset(
+            'assets/images/LAWW1.png',
+            fit: BoxFit.cover,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+          ),
+          Container(
+            color: Colors.white.withOpacity(0.5), // Beyaz efekt
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+          ),
+          SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 4.0,
+                      crossAxisSpacing: 20.0,
+                      mainAxisSpacing: 20.0,
                     ),
-                    SizedBox(height: 20),
-                    Text(
-                      'Size nasıl yardımcı olabiliriz?',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black87,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ];
-          },
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1.0,
-                    crossAxisSpacing: 20.0,
-                    mainAxisSpacing: 20.0,
+                    itemCount: services.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedServiceIndex = index;
+                          });
+                          Future.delayed(const Duration(seconds: 1), () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ChatPage(),
+                              ),
+                            );
+                          });
+                        },
+                        child: serviceContainer(services[index].name, index),
+                      );
+                    },
                   ),
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: services.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedServiceIndex = selectedServiceIndex == index ? null : index;
-                        });
-                        Future.delayed(const Duration(seconds: 1), () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const ChatPage(),
-                            ),
-                          );
-                        });
-                      },
-                      child: FadeAnimation(
-                        (1.0 + index) / 4,
-                        serviceContainer(
-                          services[index].name,
-                          index,
-                          isSelected: selectedServiceIndex == index,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: ExpansionTile(
-                  title: const Text(
+                  const SizedBox(height: 20), // "Hukuk Alanları" yazısı için boşluk
+                  const Text(
                     'Popüler Sorular',
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                       color: Colors.black87,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  children: popularQuestions.map((question) {
+                  const SizedBox(height: 10),
+                  ...popularQuestions.map((question) {
                     return ListTile(
                       title: Text(
                         question,
@@ -153,64 +140,45 @@ class _KesfetPageState extends State<KesfetPage> {
                       },
                     );
                   }).toList(),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
 
-  Widget serviceContainer(String name, int index, {bool isSelected = false}) {
-    return Stack(
-      children: [
-        Container(
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
+  Widget serviceContainer(String name, int index) {
+    bool isSelected = selectedServiceIndex == index;
 
-              image: AssetImage('assets/images/.png'),
-              fit: BoxFit.cover,
-            ),
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.rectangle, // Kare kutu
+        borderRadius: BorderRadius.circular(40.0), // Köşeleri yuvarlaklaştır
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
           ),
+        ],
+        border: isSelected
+            ? Border.all(
+          color: Colors.black,
+          width: 4,
+        )
+            : null,
+      ),
+      child: Center(
+        child: Text(
+          name,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
         ),
-        Positioned.fill(
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white.withOpacity(0.5),
-            ),
-          ),
-        ),
-        Positioned.fill(
-          child: Align(
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const SizedBox(height: 20),
-                Text(
-                  name,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-        ),
-        if (isSelected)
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.black87,
-                width: 4,
-              ),
-            ),
-          ),
-      ],
+      ),
     );
   }
 }
@@ -221,33 +189,8 @@ class Service {
   Service(this.name);
 }
 
-class FadeAnimation extends StatelessWidget {
-  final double delay;
-  final Widget child;
-
-  const FadeAnimation(this.delay, this.child, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return TweenAnimationBuilder<double>(
-      tween: Tween(begin: 0.0, end: 1.0),
-      duration: Duration(milliseconds: (500 * delay).round()),
-      builder: (BuildContext context, double value, Widget? child) {
-        return Opacity(
-          opacity: value,
-          child: Transform.translate(
-            offset: Offset(0.0, 30 * (1 - value)),
-            child: child,
-          ),
-        );
-      },
-      child: child,
-    );
-  }
-}
-
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+  const ChatPage({Key? key}) : super(key: key);
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -365,7 +308,6 @@ class _ChatPageState extends State<ChatPage> {
                             width: 2.0,
                           ),
                           color: Colors.white,
-
                         ),
                         child: TextField(
                           controller: _textController,

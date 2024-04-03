@@ -5,7 +5,7 @@ import '../main.dart';
 import 'login.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key? key}) : super(key: key);
+  const SignUpPage({super.key});
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -455,7 +455,7 @@ class CustomCheckbox extends StatelessWidget {
   final bool value;
   final ValueChanged<bool?>? onChanged;
 
-  CustomCheckbox({
+  const CustomCheckbox({super.key, 
     required this.value,
     required this.onChanged,
   });
