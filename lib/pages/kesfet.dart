@@ -39,26 +39,70 @@ class _KesfetPageState extends State<KesfetPage> {
   ];
 
   int? selectedServiceIndex;
+  String? _profileImage;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileImage();
+  }
+
+  _loadProfileImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _profileImage = prefs.getString('profile_image');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          'Hoşgeldiniz',
-          style: TextStyle(
-            fontStyle: FontStyle.italic,
-            fontSize: 22,
-            color: Colors.black87,
-            fontWeight: FontWeight.bold,
-          ),
+        title: Row(
+          children: [
+            _profileImage != null
+                ? CircleAvatar(
+              backgroundImage: FileImage(File(_profileImage!)),
+            )
+                : CircleAvatar(
+              child: Icon(Icons.person),
+            ),
+            const SizedBox(width: 10.0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Hoşgeldiniz',
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 22,
+                    color: Colors.black87,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 2.0),
+              ],
+            ),
+          ],
         ),
         actions: [
           IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              _showPopup(context, 'Arama', 'Arama özelliği şu anda geliştirme aşamasındadır.');
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              _showPopup(context, 'Ekle', 'Ekleme özelliği şu anda geliştirme aşamasındadır.');
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {
-              // Düzenle butonuna tıklandığında yapılacak işlemler
+              _showPopup(context, 'Düzenle', 'Düzenleme özelliği şu anda geliştirme aşamasındadır.');
             },
           ),
         ],
@@ -180,6 +224,26 @@ class _KesfetPageState extends State<KesfetPage> {
       ),
     );
   }
+
+  void _showPopup(BuildContext context, String title, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Tamam'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
 class Service {
@@ -203,29 +267,6 @@ class _ChatPageState extends State<ChatPage> {
     {'message': 'Merhaba 👋🏻 \nLütfen bana merak ettiğiniz bir şeyi sorun', 'isMe': false, 'color': const Color(0xFF056C89)}
   ];
   final bool _isOnline = true;
-
-  String? _profileImage;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadProfileImage();
-  }
-
-  _loadProfileImage() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _profileImage = prefs.getString('profile_image');
-    });
-  }
-
-  _saveProfileImage(String imagePath) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('profile_image', imagePath);
-    setState(() {
-      _profileImage = imagePath;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -332,7 +373,7 @@ class _ChatPageState extends State<ChatPage> {
                   },
                 ),
               ),
-              if(widget.allowSendMessage)
+              if (widget.allowSendMessage)
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
