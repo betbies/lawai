@@ -29,8 +29,8 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
 
-  confetti: ^0.6.0
-  image_picker: ^0.8.4+4
+  confetti: ^0.7.0
+  image_picker: ^1.0.7
   shared_preferences: ^2.0.8
 
   flutter:

@@ -63,7 +63,7 @@ class _KesfetPageState extends State<KesfetPage> {
                       'Size nasıl yardımcı olabiliriz?',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 20,
                         color: Colors.black87,
                         fontWeight: FontWeight.bold,
                       ),
@@ -170,7 +170,8 @@ class _KesfetPageState extends State<KesfetPage> {
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
             image: DecorationImage(
-              image: AssetImage('assets/images/LAWWCON.png'),
+
+              image: AssetImage('assets/images/.png'),
               fit: BoxFit.cover,
             ),
           ),
@@ -255,7 +256,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _textController = TextEditingController();
   final List<Map<String, dynamic>> _messages = [
-    {'message': 'Merhaba 👋🏻 \nLütfen bana merak ettiğiniz bir şeyi sorun 👍🏻', 'isMe': false, 'color': const Color(0xFF88B4BE)}
+    {'message': 'Merhaba 👋🏻 \nLütfen bana merak ettiğiniz bir şeyi sorun', 'isMe': false, 'color': const Color(0xFF056C89)}
   ];
 
   final bool _isOnline = true;
@@ -364,6 +365,7 @@ class _ChatPageState extends State<ChatPage> {
                             width: 2.0,
                           ),
                           color: Colors.white,
+
                         ),
                         child: TextField(
                           controller: _textController,
