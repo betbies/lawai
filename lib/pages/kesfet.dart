@@ -129,22 +129,12 @@ class _KesfetPageState extends State<KesfetPage> {
                       ),
                       trailing: const Icon(Icons.arrow_forward),
                       onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Popüler Soru'),
-                              content: Text(question),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: const Text('Kapat'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
+                        // Burada ChatPage'e yönlendirme yapılıyor.
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChatPage(allowSendMessage: false),
+                          ),
                         );
                       },
                     );
@@ -199,7 +189,9 @@ class Service {
 }
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key}) : super(key: key);
+  final bool allowSendMessage;
+
+  const ChatPage({Key? key, this.allowSendMessage = true}) : super(key: key);
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -340,47 +332,48 @@ class _ChatPageState extends State<ChatPage> {
                   },
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(40.0),
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 2.0,
+              if(widget.allowSendMessage)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(40.0),
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 2.0,
+                            ),
+                            color: Colors.white,
                           ),
-                          color: Colors.white,
-                        ),
-                        child: TextField(
-                          controller: _textController,
-                          decoration: const InputDecoration(
-                            hintText: 'Mesajınızı yazın...',
-                            contentPadding: EdgeInsets.all(20.0),
-                            border: InputBorder.none,
+                          child: TextField(
+                            controller: _textController,
+                            decoration: const InputDecoration(
+                              hintText: 'Mesajınızı yazın...',
+                              contentPadding: EdgeInsets.all(20.0),
+                              border: InputBorder.none,
+                            ),
+                            maxLines: null,
                           ),
-                          maxLines: null,
                         ),
                       ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.send),
-                      color: Colors.black,
-                      iconSize: 32.0,
-                      onPressed: () {
-                        if (_textController.text.isNotEmpty) {
-                          setState(() {
-                            _messages.insert(0, {'message': _textController.text, 'isMe': true, 'color': Colors.white});
-                            _textController.clear();
-                          });
-                        }
-                      },
-                    ),
-                  ],
+                      IconButton(
+                        icon: const Icon(Icons.send),
+                        color: Colors.black,
+                        iconSize: 32.0,
+                        onPressed: () {
+                          if (_textController.text.isNotEmpty) {
+                            setState(() {
+                              _messages.insert(0, {'message': _textController.text, 'isMe': true, 'color': Colors.white});
+                              _textController.clear();
+                            });
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
         ],

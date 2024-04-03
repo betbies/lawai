@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GecmisPage extends StatefulWidget {
   const GecmisPage({super.key});
@@ -103,7 +105,10 @@ class _GecmisPageState extends State<GecmisPage> {
                 final sohbet = gecmisSohbetler[index - 1];
                 return GestureDetector(
                   onTap: () {
-                    _showPopup(context, sohbet);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ChatPage(sohbet: sohbet)),
+                    );
                   },
                   child: Card(
                     elevation: 5,
@@ -171,26 +176,6 @@ class _GecmisPageState extends State<GecmisPage> {
     );
   }
 
-  void _showPopup(BuildContext context, String sohbet) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Geçmiş Sohbet'),
-          content: Text(sohbet),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Kapat'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   List<String> gecmisSohbetler = [
     'Geçmiş Sohbet 1',
     'Geçmiş Sohbet 2',
@@ -203,4 +188,148 @@ class _GecmisPageState extends State<GecmisPage> {
     'Geçmiş Sohbet 9',
     'Geçmiş Sohbet 10',
   ];
+}
+
+class ChatPage extends StatefulWidget {
+  final String sohbet;
+
+  const ChatPage({Key? key, required this.sohbet}) : super(key: key);
+
+  @override
+  _ChatPageState createState() => _ChatPageState();
+}
+
+class _ChatPageState extends State<ChatPage> {
+  final List<Map<String, dynamic>> _messages = [
+    {'message': 'Merhaba 👋🏻 \nLütfen bana merak ettiğiniz bir şeyi sorun', 'isMe': false, 'color': const Color(0xFF056C89)}
+  ];
+  final bool _isOnline = true;
+
+  String? _profileImage;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileImage();
+  }
+
+  _loadProfileImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _profileImage = prefs.getString('profile_image');
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          children: [
+            const SizedBox(width: 10.0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'LAW AI',
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 2.0),
+                Text(
+                  _isOnline ? 'Online' : 'Offline',
+                  style: TextStyle(fontSize: 14.0, color: _isOnline ? Colors.green : Colors.red),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/LAWW3.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          Positioned.fill(
+            child: Container(
+              color: Colors.white.withOpacity(0.6),
+            ),
+          ),
+          Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  reverse: true,
+                  itemCount: _messages.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: _messages[index]['isMe'] ? MainAxisAlignment.end : MainAxisAlignment.start,
+                        children: [
+                          _messages[index]['isMe']
+                              ? Container()
+                              : CircleAvatar(
+                            backgroundImage: AssetImage('assets/images/LAWWCON.png'), // Profil resmi
+                          ),
+                          const SizedBox(width: 10.0),
+                          Flexible(
+                            child: Container(
+                              padding: const EdgeInsets.all(12.0),
+                              decoration: BoxDecoration(
+                                color: _messages[index]['color'],
+                                borderRadius: BorderRadius.circular(40.0),
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 2.0,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Text(
+                                  _messages[index]['message'],
+                                  style: TextStyle(
+                                    fontSize: 16.0,
+                                    color: _messages[index]['isMe'] ? Colors.black : Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 10.0),
+                          _messages[index]['isMe']
+                              ? (_profileImage != null
+                              ? CircleAvatar(
+                            backgroundImage: FileImage(File(_profileImage!)),
+                          )
+                              : Container(
+                            width: 40.0,
+                            height: 40.0,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(Icons.person, color: Colors.white),
+                          ))
+                              : Container(), // Profil resmi eklendi
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      backgroundColor: const Color(0xFFC3E4E9),
+    );
+  }
 }
