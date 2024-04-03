@@ -318,10 +318,21 @@ class _ChatPageState extends State<ChatPage> {
                           ),
                           const SizedBox(width: 10.0),
                           _messages[index]['isMe']
+                              ? (_profileImage != null
                               ? CircleAvatar(
-                            backgroundImage: _profileImage != null ? FileImage(File(_profileImage!)) : null,
+                            backgroundImage: FileImage(File(_profileImage!)),
                           )
+                              : Container(
+                            width: 40.0,
+                            height: 40.0,
+                            decoration: BoxDecoration(
+                              color: Colors.grey,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(Icons.person, color: Colors.white),
+                          ))
                               : Container(), // Profil resmi eklendi
+
                         ],
                       ),
                     );
