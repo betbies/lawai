@@ -291,7 +291,9 @@ class _ChatPageState extends State<ChatPage> {
                         children: [
                           _messages[index]['isMe']
                               ? Container()
-                              : CircleAvatar(), // Profil resmi eklendi
+                              : CircleAvatar(
+                            backgroundImage: AssetImage('assets/images/LAWWCON.png'), // Profil resmi
+                          ),
                           const SizedBox(width: 10.0),
                           Flexible(
                             child: Container(
@@ -332,7 +334,6 @@ class _ChatPageState extends State<ChatPage> {
                             child: Icon(Icons.person, color: Colors.white),
                           ))
                               : Container(), // Profil resmi eklendi
-
                         ],
                       ),
                     );
