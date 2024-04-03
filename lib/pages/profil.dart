@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+void main() {
+  runApp(const MaterialApp(
+    home: ProfilPage(),
+  ));
+}
+
 class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});
 
@@ -60,7 +66,7 @@ class _ProfilPageState extends State<ProfilPage> {
             height: MediaQuery.of(context).size.height,
           ),
           Container(
-            color: Colors.white.withOpacity(0.5), // Beyaz efekt
+            color: Colors.white.withOpacity(0.5),
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
           ),
@@ -289,5 +295,56 @@ class _ProfilPageState extends State<ProfilPage> {
     setState(() {
       _image = null;
     });
+  }
+}
+
+class ChatPage extends StatelessWidget {
+  final String profileImagePath;
+
+  const ChatPage({super.key, required this.profileImagePath});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Chat'),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  leading: CircleAvatar(
+                    radius: 20,
+                    backgroundImage: FileImage(File(profileImagePath)),
+                  ),
+                  title: Text('Kullanıcı Mesajı $index'),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                const Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(hintText: 'Mesajınızı yazın'),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.send),
+                  onPressed: () {
+                    // Mesajı gönderme işlemi
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

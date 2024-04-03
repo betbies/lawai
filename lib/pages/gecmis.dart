@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class GecmisPage extends StatefulWidget {
-  const GecmisPage({Key? key}) : super(key: key);
+  const GecmisPage({super.key});
 
   @override
   _GecmisPageState createState() => _GecmisPageState();
@@ -18,13 +18,13 @@ class _GecmisPageState extends State<GecmisPage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            const Text(
               'Geçmiş Sohbetler',
               style: TextStyle(color: Colors.black),
             ),
             Text(
               '${gecmisSohbetler.length} Sohbet',
-              style: TextStyle(color: Colors.grey, fontSize: 16),
+              style: const TextStyle(color: Colors.grey, fontSize: 16),
             ),
           ],
         ),
@@ -65,10 +65,10 @@ class _GecmisPageState extends State<GecmisPage> {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(40.0),
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [
-                              const Color(0xFFFFFFFF),
-                              const Color(0xFF88B4BE),
+                              Color(0xFFFFFFFF),
+                              Color(0xFF88B4BE),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -79,7 +79,7 @@ class _GecmisPageState extends State<GecmisPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
+                              const Text(
                                 'Geçmiş Sohbetler',
                                 style: TextStyle(
                                   fontSize: 18,
@@ -113,10 +113,10 @@ class _GecmisPageState extends State<GecmisPage> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40.0),
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                           colors: [
-                            const Color(0xFFFFFFFF),
-                            const Color(0xFF88B4BE),
+                            Color(0xFFFFFFFF),
+                            Color(0xFF88B4BE),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -136,25 +136,25 @@ class _GecmisPageState extends State<GecmisPage> {
                               ),
                             ),
                             const SizedBox(height: 10),
-                            Text(
+                            const Text(
                               'Bu sohbetin içeriği...',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black54,
                               ),
                             ),
                             const SizedBox(height: 10),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   'Tarih ve Saat',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.black54,
                                   ),
                                 ),
-                                const Icon(Icons.arrow_forward, color: Colors.black),
+                                Icon(Icons.arrow_forward, color: Colors.black),
                               ],
                             ),
                           ],

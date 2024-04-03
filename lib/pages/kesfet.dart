@@ -1,4 +1,13 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+void main() {
+  runApp(const MaterialApp(
+    home: KesfetPage(),
+  ));
+}
 
 class KesfetPage extends StatefulWidget {
   const KesfetPage({Key? key}) : super(key: key);
@@ -201,8 +210,30 @@ class _ChatPageState extends State<ChatPage> {
   final List<Map<String, dynamic>> _messages = [
     {'message': 'Merhaba 👋🏻 \nLütfen bana merak ettiğiniz bir şeyi sorun', 'isMe': false, 'color': const Color(0xFF056C89)}
   ];
-
   final bool _isOnline = true;
+
+  String? _profileImage;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileImage();
+  }
+
+  _loadProfileImage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _profileImage = prefs.getString('profile_image');
+    });
+  }
+
+  _saveProfileImage(String imagePath) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('profile_image', imagePath);
+    setState(() {
+      _profileImage = imagePath;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -260,7 +291,7 @@ class _ChatPageState extends State<ChatPage> {
                         children: [
                           _messages[index]['isMe']
                               ? Container()
-                              : Container(),
+                              : CircleAvatar(), // Profil resmi eklendi
                           const SizedBox(width: 10.0),
                           Flexible(
                             child: Container(
@@ -287,8 +318,10 @@ class _ChatPageState extends State<ChatPage> {
                           ),
                           const SizedBox(width: 10.0),
                           _messages[index]['isMe']
-                              ? Container()
-                              : Container(),
+                              ? CircleAvatar(
+                            backgroundImage: _profileImage != null ? FileImage(File(_profileImage!)) : null,
+                          )
+                              : Container(), // Profil resmi eklendi
                         ],
                       ),
                     );
@@ -343,10 +376,4 @@ class _ChatPageState extends State<ChatPage> {
       backgroundColor: const Color(0xFFC3E4E9),
     );
   }
-}
-
-void main() {
-  runApp(const MaterialApp(
-    home: KesfetPage(),
-  ));
 }
